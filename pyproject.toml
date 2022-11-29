@@ -5,10 +5,13 @@ description = ""
 authors = ["maxus <maxus.info.mail@gmail.com>"]
 readme = "README.md"
 
-[tool.poetry.dependencies]
-python = "<3.12,>=3.7"
-pyside6 = "^6.4.1"
+[[tool.poetry.packages]]
+include = "NeuroPlaySDK/Python"
 
+[tool.poetry.dependencies]
+python = ">=3.9,<3.11"
+requests = "*"
+pyside6 = "^6.4.0"
 
 [build-system]
 requires = ["poetry-core"]
