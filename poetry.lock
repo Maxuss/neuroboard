@@ -26,6 +26,22 @@ optional = false
 python-versions = ">=3.5"
 
 [[package]]
+name = "neuroplay"
+version = "0.1.0"
+description = ""
+category = "main"
+optional = false
+python-versions = ">=3.9,<3.11"
+develop = false
+
+[package.dependencies]
+requests = "^2.28.1"
+
+[package.source]
+type = "directory"
+url = "NeuroPlaySDK/Python"
+
+[[package]]
 name = "pyside6"
 version = "6.4.1"
 description = "Python bindings for the Qt cross-platform application and UI framework"
@@ -103,7 +119,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.9,<3.11"
-content-hash = "a9666c41348e50999342450050757e0455071d35038c5fd0be09469c38e7174a"
+content-hash = "149c5c71477d2670f36dc3485e7d1fb29eabd43d4535c8cce765c981daa7bbf7"
 
 [metadata.files]
 certifi = [
@@ -118,6 +134,7 @@ idna = [
     {file = "idna-3.4-py3-none-any.whl", hash = "sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2"},
     {file = "idna-3.4.tar.gz", hash = "sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4"},
 ]
+neuroplay = []
 pyside6 = [
     {file = "PySide6-6.4.1-cp37-abi3-macosx_10_9_universal2.whl", hash = "sha256:a5e56ce84db3453a1522d7bebaeb161f3c95fd5eeeb159f76e79615294772e8a"},
     {file = "PySide6-6.4.1-cp37-abi3-manylinux_2_28_x86_64.whl", hash = "sha256:e0730024e682dd98ec3637432c98bf682bc8f3e64083acf681a62a1a1a9e2beb"},

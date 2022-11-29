@@ -1,1 +1,1 @@
-import PySide6
+import neuroplay.model

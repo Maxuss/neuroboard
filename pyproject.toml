@@ -4,14 +4,13 @@ version = "0.1.0"
 description = ""
 authors = ["maxus <maxus.info.mail@gmail.com>"]
 readme = "README.md"
-
-[[tool.poetry.packages]]
-include = "NeuroPlaySDK/Python"
+packages = [{ include = "./NeuroPlaySDK/Python" }]
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.11"
 requests = "*"
 pyside6 = "^6.4.0"
+NeuroPlay = { path = "./NeuroPlaySDK/Python" }
 
 [build-system]
 requires = ["poetry-core"]
