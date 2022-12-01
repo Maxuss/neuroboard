@@ -13,6 +13,7 @@ from PySide6.QtWidgets import (
     QDialogButtonBox,
 )
 from p300 import capture, encode, pack
+from requests.exceptions import ConnectionError
 
 
 def build_letter_widget(index: int) -> QLabel:
@@ -74,18 +75,25 @@ class MainWindow(QMainWindow):
             ).exec_()
             return
 
-        # print("Data capture begin")
         passes = len(self.input.text())
-        data = capture(
-            passes,
-            len(self.letters),
-            lambda index: self.shift_accent(index),
-        )
-        self.record += 1
-        # print("Data capture end")
-        for element in self.letters:
-            element.setStyleSheet("background-color: transparent")
-        encode(self.record, data, self.input.text())
+        try:
+            # print("Data capture begin")
+            data = capture(
+                passes,
+                len(self.letters),
+                lambda index: self.shift_accent(index),
+            )
+            self.record += 1
+            # print("Data capture end")
+            for element in self.letters:
+                element.setStyleSheet("background-color: transparent")
+            encode(self.record, data, self.input.text())
+
+        except ConnectionError:
+            InfoDialog(
+                "Не удалось подключиться к серверу",
+                "Для записи данных необходимо запустить программу NeuroPlay",
+            ).exec_()
 
     def shift_accent(self, new: int):
         """Shifts accent to the next character cell, highlighting it
