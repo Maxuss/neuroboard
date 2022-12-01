@@ -15,7 +15,7 @@ from PySide6.QtWidgets import (
 from p300 import capture, encode, pack
 
 
-def build_letter_widget(index: int) -> QLabel:
+def __build_letter_widget(index: int) -> QLabel:
     label = QLabel(str(index))
     font = label.font()
     font.setPointSize(40)
@@ -39,7 +39,7 @@ class MainWindow(QMainWindow):
         self.button2 = QPushButton("Сохранить данные тренировки")
         self.button2.clicked.connect(self.save_output)
 
-        self.letters = [build_letter_widget(i) for i in range(1, 9)]
+        self.letters = [__build_letter_widget(i) for i in range(1, 9)]
 
         layout = QVBoxLayout()
         layout.addWidget(self.label1)
@@ -66,6 +66,7 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(container)
 
     def begin_capture(self):
+        """Begins capture of the training data"""
         if len(self.input.text()) == 0:
             InfoDialog(
                 "Введите текст тренировки",
@@ -76,7 +77,6 @@ class MainWindow(QMainWindow):
         print("Data capture begin")
         passes = len(self.input.text())
         data = capture(
-            self.record,
             passes,
             len(self.letters),
             lambda index: self.shift_accent(index),
@@ -88,15 +88,19 @@ class MainWindow(QMainWindow):
         encode(self.record, data, self.input.text())
 
     def shift_accent(self, new: int):
+        """Shifts accent to the next character cell, highlighting it
+
+        Args:
+            new (int): Index of the new cell
+        """
         print("Passing here")
         old = new - 1 if new != 0 else len(self.letters) - 1
-        old = self.letters[old]
-        old.setStyleSheet("background-color: transparent")
-        new = self.letters[new]
-        new.setStyleSheet("background-color: cyan")
-        QApplication.processEvents()
+        self.letters[old].setStyleSheet("background-color: transparent")
+        self.letters[new].setStyleSheet("background-color: cyan")
+        QApplication.processEvents()  # process events to unfreeze the application and update style sheet changes
 
     def save_output(self):
+        """Saves the output to a gzip file"""
         if self.record == 0:
             InfoDialog(
                 "Испытаний недостаточно",
@@ -116,13 +120,18 @@ class MainWindow(QMainWindow):
 
 
 class InfoDialog(QDialog):
+    """A dialog window with title, message and an OK button
+
+    Args:
+        QDialog (_type_): Parent dialog window type
+    """
+
     def __init__(self, title: str, message: str):
         super().__init__()
 
         self.setWindowTitle(title)
 
-        QBtn = QDialogButtonBox.Ok
-        self.buttonBox = QDialogButtonBox(QBtn)
+        self.buttonBox = QDialogButtonBox(QDialogButtonBox.Ok)
         self.buttonBox.accepted.connect(lambda: self.close())
 
         self.layout = QVBoxLayout()
@@ -133,6 +142,7 @@ class InfoDialog(QDialog):
 
 
 def show():
+    """Displays this Qt application"""
     app = QApplication(sys.argv)
 
     window = MainWindow()
