@@ -1,5 +1,5 @@
 import sys
-from PySide6.QtCore import QRect
+from PySide6.QtCore import QRect, QTimer
 from PySide6.QtWidgets import (
     QApplication,
     QMainWindow,
@@ -7,11 +7,20 @@ from PySide6.QtWidgets import (
     QWidget,
     QLineEdit,
     QVBoxLayout,
+    QHBoxLayout,
     QLabel,
     QDialog,
     QDialogButtonBox,
 )
 from p300 import capture, encode, pack
+
+
+def build_letter_widget(index: int) -> QLabel:
+    label = QLabel(str(index))
+    font = label.font()
+    font.setPointSize(40)
+    label.setFont(font)
+    return label
 
 
 class MainWindow(QMainWindow):
@@ -30,8 +39,17 @@ class MainWindow(QMainWindow):
         self.button2 = QPushButton("Сохранить данные тренировки")
         self.button2.clicked.connect(self.save_output)
 
+        self.letters = [build_letter_widget(i) for i in range(1, 9)]
+
         layout = QVBoxLayout()
         layout.addWidget(self.label1)
+        layout.addSpacing(10)
+        grid = QHBoxLayout()
+        for letter in self.letters:
+            grid.addWidget(letter)
+        box = QWidget()
+        box.setLayout(grid)
+        layout.addWidget(box)
         layout.addSpacing(10)
         layout.addWidget(self.label2)
         layout.addWidget(self.input)
@@ -40,6 +58,10 @@ class MainWindow(QMainWindow):
 
         container = QWidget()
         container.setLayout(layout)
+
+        self.timer = QTimer()
+        self.timer.setInterval(1000)
+        self.timer.start()
 
         self.setCentralWidget(container)
 
@@ -53,9 +75,26 @@ class MainWindow(QMainWindow):
 
         print("Data capture begin")
         passes = len(self.input.text())
-        data = capture(++self.record, passes)
+        data = capture(
+            self.record,
+            passes,
+            len(self.letters),
+            lambda index: self.shift_accent(index),
+        )
+        self.record += 1
         print("Data capture end")
+        for element in self.letters:
+            element.setStyleSheet("background-color: transparent")
         encode(self.record, data, self.input.text())
+
+    def shift_accent(self, new: int):
+        print("Passing here")
+        old = new - 1 if new != 0 else len(self.letters) - 1
+        old = self.letters[old]
+        old.setStyleSheet("background-color: transparent")
+        new = self.letters[new]
+        new.setStyleSheet("background-color: cyan")
+        QApplication.processEvents()
 
     def save_output(self):
         if self.record == 0:

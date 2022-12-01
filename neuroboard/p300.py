@@ -6,15 +6,16 @@ import threading
 import shutil
 
 
-def capture(record_index: int, passes: int) -> bytes:
+def capture(record_index: int, passes: int, max_passes: int, callback) -> bytes:
     play = NeuroPlay()
     play.set_connected(True)
     play.enable_data_grab()
     play.start_record()
     for element in range(0, passes):
-        for i in range(0, 5):
+        for i in range(0, max_passes):
             print(f"recording element {element} pass {i}")
             play.add_edf_annotation(f"e_{element}$pass_{i}")
+            callback(i)
             time.sleep(0.5)
     return base64.b64decode(play.stop_record()["files"][0]["data"])
 
