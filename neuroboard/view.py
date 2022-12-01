@@ -15,7 +15,7 @@ from PySide6.QtWidgets import (
 from p300 import capture, encode, pack
 
 
-def __build_letter_widget(index: int) -> QLabel:
+def build_letter_widget(index: int) -> QLabel:
     label = QLabel(str(index))
     font = label.font()
     font.setPointSize(40)
@@ -39,7 +39,7 @@ class MainWindow(QMainWindow):
         self.button2 = QPushButton("Сохранить данные тренировки")
         self.button2.clicked.connect(self.save_output)
 
-        self.letters = [__build_letter_widget(i) for i in range(1, 9)]
+        self.letters = [build_letter_widget(i) for i in range(1, 9)]
 
         layout = QVBoxLayout()
         layout.addWidget(self.label1)
@@ -74,7 +74,7 @@ class MainWindow(QMainWindow):
             ).exec_()
             return
 
-        print("Data capture begin")
+        # print("Data capture begin")
         passes = len(self.input.text())
         data = capture(
             passes,
@@ -82,7 +82,7 @@ class MainWindow(QMainWindow):
             lambda index: self.shift_accent(index),
         )
         self.record += 1
-        print("Data capture end")
+        # print("Data capture end")
         for element in self.letters:
             element.setStyleSheet("background-color: transparent")
         encode(self.record, data, self.input.text())
@@ -93,7 +93,7 @@ class MainWindow(QMainWindow):
         Args:
             new (int): Index of the new cell
         """
-        print("Passing here")
+        # print("Passing here")
         old = new - 1 if new != 0 else len(self.letters) - 1
         self.letters[old].setStyleSheet("background-color: transparent")
         self.letters[new].setStyleSheet("background-color: cyan")
@@ -108,9 +108,9 @@ class MainWindow(QMainWindow):
             ).exec_()
             return
 
-        print("Saving data...")
+        # print("Saving data...")
         pack()
-        print("Done saving data!")
+        # print("Done saving data!")
 
         dlg = InfoDialog(
             "Данные сохранены",

@@ -6,7 +6,7 @@ import threading
 import shutil
 
 
-def capture(elements: int, max_passes: int, callback: function) -> bytes:
+def capture(elements: int, max_passes: int, callback) -> bytes:
     """Captures data from the NeuroPlay device
 
     Args:
