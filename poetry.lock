@@ -111,8 +111,6 @@ python-versions = ">=3.9,<3.11"
 develop = false
 
 [package.dependencies]
-matplotlib = "*"
-numpy = "*"
 requests = "^2.28.1"
 
 [package.source]
@@ -305,7 +303,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.9,<3.11"
-content-hash = "3a8d7eed3511a1d798322e3a580d68c39a6ad8645e85d775e5528acc820e0f89"
+content-hash = "9daca9adc508548ffe0dab6583e05364167be15029e909f7b566a4aa2ef95b9e"
 
 [metadata.files]
 certifi = [

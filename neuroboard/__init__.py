@@ -1,4 +1,4 @@
-from p300 import process
+from view import show
 
 if __name__ == "__main__":
-    data = process()
+    show()

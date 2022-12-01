@@ -4,11 +4,13 @@ version = "0.1.0"
 description = ""
 authors = ["maxus <maxus.info.mail@gmail.com>"]
 readme = "README.md"
-packages = [{ include = "./NeuroPlaySDK" }]
+packages = [{ include = "./NeuroPlaySDK" }, { include = "./neuroboard" }]
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.11"
 requests = "*"
+numpy = "*"
+matplotlib = "*"
 pyside6 = "^6.4.0"
 NeuroPlay = { path = "./NeuroPlaySDK" }
 
