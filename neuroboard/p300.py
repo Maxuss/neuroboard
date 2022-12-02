@@ -15,7 +15,7 @@ def capture(elements: int, max_passes: int, callback) -> bytes:
         callback (function): Function that will be called each time a pass proceeds
 
     Returns:
-        bytes: _description_
+        bytes: Recorded bytes
     """
 
     play = NeuroPlay()
@@ -23,11 +23,12 @@ def capture(elements: int, max_passes: int, callback) -> bytes:
     play.enable_data_grab()
     play.start_record()
     for element in range(0, elements):
-        for i in range(0, max_passes):
-            # print(f"recording element {element} pass {i}")
-            play.add_edf_annotation(f"e_{element}$pass_{i}")
-            callback(i)
-            time.sleep(0.5)
+        for j in range(0, 5):
+            for i in range(0, max_passes):
+                callback(i)
+                # print(f"recording element {element} pass {i}")
+                play.add_edf_annotation(f"element_{element}$char_{i}$pass_{j}")
+                time.sleep(0.4)
     return base64.b64decode(play.stop_record()["files"][0]["data"])
 
 

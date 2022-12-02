@@ -1,4 +1,4 @@
-import sys
+import sys, threading, time
 from PySide6.QtCore import QRect, QTimer
 from PySide6.QtWidgets import (
     QApplication,
@@ -40,7 +40,7 @@ class MainWindow(QMainWindow):
         self.button2 = QPushButton("Сохранить данные тренировки")
         self.button2.clicked.connect(self.save_output)
 
-        self.letters = [build_letter_widget(i) for i in range(1, 9)]
+        self.letters = [build_letter_widget(i) for i in range(0, 10)]
 
         layout = QVBoxLayout()
         layout.addWidget(self.label1)
@@ -102,10 +102,16 @@ class MainWindow(QMainWindow):
             new (int): Index of the new cell
         """
         # print("Passing here")
-        old = new - 1 if new != 0 else len(self.letters) - 1
-        self.letters[old].setStyleSheet("background-color: transparent")
-        self.letters[new].setStyleSheet("background-color: cyan")
-        QApplication.processEvents()  # process events to unfreeze the application and update style sheet changes
+        self.letters[new].setStyleSheet("background-color: yellow")
+        QApplication.processEvents()
+
+        threading.Thread(target=lambda: self.__reset(new)).start()
+
+    def __reset(self, new: int):
+        # process events to unfreeze the application and update style sheet changes
+        time.sleep(0.1)
+        self.letters[new].setStyleSheet("background-color: transparent")
+        QApplication.processEvents()
 
     def save_output(self):
         """Saves the output to a gzip file"""
