@@ -60,10 +60,6 @@ class MainWindow(QMainWindow):
         container = QWidget()
         container.setLayout(layout)
 
-        self.timer = QTimer()
-        self.timer.setInterval(1000)
-        self.timer.start()
-
         self.setCentralWidget(container)
 
     def begin_capture(self):
@@ -104,11 +100,6 @@ class MainWindow(QMainWindow):
         # print("Passing here")
         self.letters[new].setStyleSheet("background-color: yellow")
         QApplication.processEvents()
-
-        threading.Thread(target=lambda: self.__reset(new)).start()
-
-    def __reset(self, new: int):
-        # process events to unfreeze the application and update style sheet changes
         time.sleep(0.1)
         self.letters[new].setStyleSheet("background-color: transparent")
         QApplication.processEvents()
