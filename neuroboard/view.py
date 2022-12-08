@@ -98,7 +98,7 @@ class MainWindow(QMainWindow):
             new (int): Index of the new cell
         """
         # print("Passing here")
-        self.letters[new].setStyleSheet("background-color: yellow")
+        self.letters[new].setStyleSheet("background-color: cyan")
         QApplication.processEvents()
         time.sleep(0.1)
         self.letters[new].setStyleSheet("background-color: transparent")
