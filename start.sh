@@ -1,0 +1,1 @@
+poetry run python neuroboard/__init__.py
