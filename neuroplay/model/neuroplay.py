@@ -63,12 +63,12 @@ class NeuroPlay:
 
     def start_record(self, start=True, path=""):
         if start:
-            requests.get(self.url + "startRecord?path=" + path)
+            return requests.get(self.url + "startRecord?path=" + path)
         else:
-            requests.get(self.url + "stopRecord")
+            return requests.get(self.url + "stopRecord")
 
     def stop_record(self):
-        self.stopRecord(False)
+        return requests.get(self.url + "stopRecord")
 
     def add_edf_annotation(
         self, text: str, duration: int = 50, pos: int = time.time() * 1000
