@@ -20,7 +20,7 @@ def capture(elements: int, max_passes: int, callback) -> bytes:
 
     play = NeuroPlay()
     play.set_connected(True)
-    play.enable_data_grab()
+    # play.enable_data_grab()
     play.start_record()
     for element in range(0, elements):
         for j in range(0, 5):
@@ -29,7 +29,12 @@ def capture(elements: int, max_passes: int, callback) -> bytes:
                 # print(f"recording element {element} pass {i}")
                 play.add_edf_annotation(f"element_{element}$char_{i}$pass_{j}")
                 time.sleep(0.4)
-    return base64.b64decode(play.stop_record()["files"][0]["data"])
+    data = play.stop_record()
+    if data.ok:
+        response = data.json()
+        print(response)
+        return base64.b64decode(response["files"][0]["data"])
+    return ""
 
 
 def encode(record_index: int, bytes: bytes, training: str):
