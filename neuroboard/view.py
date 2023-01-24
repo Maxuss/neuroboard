@@ -1,6 +1,6 @@
 import sys, threading, time
-from PySide6.QtCore import QRect, QTimer
-from PySide6.QtWidgets import (
+from PySide2.QtCore import QRect, QTimer
+from PySide2.QtWidgets import (
     QApplication,
     QMainWindow,
     QPushButton,
