@@ -121,7 +121,6 @@ class MainWindow(QMainWindow):
         data = play.stop_record()
         if data.ok:
             response = data.json()
-            print(response)
             return base64.b64decode(response["files"][0]["data"])
         return ""
 
