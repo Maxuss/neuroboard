@@ -98,7 +98,7 @@ class MainWindow(QMainWindow):
         for element in range(0, element_count):
             for letter in self.letters:
                 letter.hide()
-            self.label3.setText(f"Набираем Символ {self.letters[element].text()}")
+            self.label3.setText(f"Набираем Символ {self.input.text()[element]}")
             self.label3.show()
             QApplication.processEvents()
 
@@ -108,7 +108,7 @@ class MainWindow(QMainWindow):
             QApplication.processEvents()
 
             for j in range(0, self.config.pass_count):
-                for i in range(0, element_count):
+                for i in range(0, len(self.letters)):
                     ## highlighting the element
                     self.letters[i].setStyleSheet("background-color: cyan")
                     QApplication.processEvents()
@@ -147,7 +147,7 @@ class MainWindow(QMainWindow):
 
         try:
             # print("Data capture begin")
-            data = self.do_capture(len(self.letters))
+            data = self.do_capture(len(self.input.text()))
             self.record += 1
             # print("Data capture end")
             # for element in self.letters:
