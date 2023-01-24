@@ -2,6 +2,7 @@ import os
 import threading
 import shutil
 from config import AppConfig
+from datetime import datetime
 
 
 def encode(record_index: int, bytes: bytes, training: str):
@@ -20,7 +21,7 @@ def encode(record_index: int, bytes: bytes, training: str):
 def __encode_inner(record_index: int, bytes: bytes, training: str):
     if not os.path.exists("./nbdata"):
         os.makedirs("./nbdata")
-    with open(f"nbdata/train-{record_index}.ntd", "wb+") as file:
+    with open(f"nbdata/{datetime.date()}-{training}-{record_index}.ntd", "wb+") as file:
         file.write(f"{training}\0".encode("utf-8"))
         file.write(bytes)
 
