@@ -15,7 +15,7 @@ from PySide2.QtWidgets import (
 )
 from p300 import encode, pack
 from requests.exceptions import ConnectionError
-from config import AppConfig
+from config import AppConfig, load_config, save_config
 from neuroplay.model.neuroplay import NeuroPlay
 import time
 import base64
@@ -34,13 +34,7 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
 
         # TODO: actual config
-        self.config = AppConfig(
-            500,
-            100,
-            4,
-            500,
-        )
-
+        self.config = load_config()
         self.setWindowTitle("NeuroBoard v0.1")
         self.setGeometry(QRect(800, 200, 800, 200))
 
@@ -223,6 +217,8 @@ class SettingsWindow(QDialog):
         self.config.highlight_time_ms = int(highlight_time)
         self.config.pass_count = int(passes)
         self.config.delay_time = int(delay_time)
+
+        save_config(self.config)
 
         self.close()
 
